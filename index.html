@@ -7,19 +7,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Responsive Gallery</title>
+
+    <style>
+        .responsiveGallery .rg-outer {
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+
+        .responsiveGallery .rg-inner {
+            position: absolute;
+            height: 200px;
+            display: inline-block;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Responsive Gallery</h1>
 
-    <div id="responsiveGallery">
-        <img src="http://via.placeholder.com/100x600" />
-        <img src="http://via.placeholder.com/200x500" />
-        <img src="http://via.placeholder.com/300x400" />
-        <img src="http://via.placeholder.com/400x300" />
-        <img src="http://via.placeholder.com/500x200" />
-        <img src="http://via.placeholder.com/600x100" />
+    <div class="responsiveGallery">
+
+        <div class="rg-outer">
+            <div class="rg-inner">
+                <a href="#">
+                    <img src="http://via.placeholder.com/100x600" />
+                </a>
+                <a href="#">
+                    <img src="http://via.placeholder.com/200x500" />
+                </a>
+                <a href="#">
+                    <img src="http://via.placeholder.com/300x400" />
+                </a>
+                <a href="#">
+                    <img src="http://via.placeholder.com/400x300" />
+                </a>
+                <a href="#">
+                    <img src="http://via.placeholder.com/500x200" />
+                </a>
+                <a href="#">
+                    <img src="http://via.placeholder.com/600x100" />
+                </a>
+            </div>
+        </div>
     </div>
 </body>
+
+<script>
+
+</script>
 
 </html>
