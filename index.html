@@ -10,15 +10,22 @@
 
     <style>
         .responsiveGallery .rg-outer {
+            position: relative;
             width: 100%;
             height: 200px;
-            position: relative;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         .responsiveGallery .rg-inner {
             position: absolute;
+            width: 100%;
             height: 200px;
             display: inline-block;
+        }
+
+        .responsiveGallery .rg-inner img {
+            height: 100%;
         }
     </style>
 </head>
@@ -30,22 +37,22 @@
 
         <div class="rg-outer">
             <div class="rg-inner">
-                <a href="#">
+                <a href="#" data-pos="1">
                     <img src="http://via.placeholder.com/100x600" />
                 </a>
-                <a href="#">
+                <a href="#" data-pos="2">
                     <img src="http://via.placeholder.com/200x500" />
                 </a>
-                <a href="#">
+                <a href="#" data-pos="3">
                     <img src="http://via.placeholder.com/300x400" />
                 </a>
-                <a href="#">
+                <a href="#" data-pos="4">
                     <img src="http://via.placeholder.com/400x300" />
                 </a>
-                <a href="#">
+                <a href="#" data-pos="5">
                     <img src="http://via.placeholder.com/500x200" />
                 </a>
-                <a href="#">
+                <a href="#" data-pos="6">
                     <img src="http://via.placeholder.com/600x100" />
                 </a>
             </div>
@@ -53,6 +60,7 @@
     </div>
 </body>
 
+<script src="./anime.min.js"></script>
 <script>
 
 </script>
