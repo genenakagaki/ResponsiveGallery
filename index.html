@@ -9,22 +9,45 @@
     <title>Responsive Gallery</title>
 
     <style>
-        .responsiveGallery .rg-outer {
+        .responsiveGallery .rg-view {
             position: relative;
             width: 100%;
             height: 200px;
             white-space: nowrap;
             overflow: hidden;
+            z-index: 1;
         }
 
-        .responsiveGallery .rg-inner {
+        .responsiveGallery .controls button {
+            position: absolute;
+            z-index: 10;
+            height: 100%;
+            background: none;
+            border: 1px solid black;
+        }
+
+        .responsiveGallery .controls .next {
+            left: 0;
+        }
+
+        .responsiveGallery .controls .prev {
+            right: 0;
+        }
+
+        .responsiveGallery .rg-container {
             position: absolute;
             width: 100%;
             height: 200px;
+            left: 0;
             display: inline-block;
         }
 
-        .responsiveGallery .rg-inner img {
+        .responsiveGallery .rg-container .rg-item {
+            display: inline-block;
+            height: 100%;
+        }
+
+        .responsiveGallery .rg-container .rg-item img {
             height: 100%;
         }
     </style>
@@ -35,26 +58,31 @@
 
     <div class="responsiveGallery">
 
-        <div class="rg-outer">
-            <div class="rg-inner">
-                <a href="#" data-pos="1">
+        <div class="rg-view">
+            <div class="rg-container">
+                <div class="rg-item active" data-pos="1">
                     <img src="http://via.placeholder.com/100x600" />
-                </a>
-                <a href="#" data-pos="2">
+                </div>
+                <div class="rg-item" data-pos="2">
                     <img src="http://via.placeholder.com/200x500" />
-                </a>
-                <a href="#" data-pos="3">
+                </div>
+                <div class="rg-item" data-pos="3">
                     <img src="http://via.placeholder.com/300x400" />
-                </a>
-                <a href="#" data-pos="4">
+                </div>
+                <div class="rg-item" data-pos="4">
                     <img src="http://via.placeholder.com/400x300" />
-                </a>
-                <a href="#" data-pos="5">
+                </div>
+                <div class="rg-item" data-pos="5">
                     <img src="http://via.placeholder.com/500x200" />
-                </a>
-                <a href="#" data-pos="6">
+                </div>
+                <div class="rg-item" data-pos="6">
                     <img src="http://via.placeholder.com/600x100" />
-                </a>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="next">&lt;</button>
+                <button class="prev">&gt;</button>
             </div>
         </div>
     </div>
@@ -62,7 +90,94 @@
 
 <script src="./anime.min.js"></script>
 <script>
+    function log(message) {
+        var D = true;
+        if (D)
+            console.log(message);
+    }
 
+    function ResponsiveGallery() {
+        this.rg = document.querySelector('.responsiveGallery');
+        this.container = this.rg.querySelector('.rg-container');
+        this.itemCount = this.rg.querySelectorAll('.rg-item').length;
+
+        // initialize
+        log("ResponsiveGallery initialize");
+
+        // Handle sliding to the left
+        // (bring the rightmost img to the left)
+        var firstItem = this.rg.querySelector('.rg-item');
+        var lastItem = this.rg.querySelector('.rg-item:last-child');
+        this.rg.querySelector('.rg-container').insertBefore(lastItem, firstItem);
+        // slide the rg-container to show the original first item
+        this.container.style.left = '-' + lastItem.offsetWidth + 'px';
+
+        // Add listeners to controls
+        var leftControl = this.rg.querySelector('.controls .next');
+        var rightControl = this.rg.querySelector('.controls .prev');
+        var rgInstance = this;
+        leftControl.addEventListener('click', function () {
+            rgInstance.movePrev();
+        });
+        rightControl.addEventListener('click', function() {
+            rgInstance.moveNext();
+        });
+    }
+
+    ResponsiveGallery.prototype.getActive = function () {
+        // Get active item and remove active class
+        return this.rg.querySelector('.rg-item.active');
+    }
+
+    ResponsiveGallery.prototype.moveNext = function () {
+        var activeItem = this.getActive();
+
+        // Get new position
+        var newPos = activeItem.dataset.pos;
+        newPos++;
+        if (newPos > this.itemCount)
+            newPos = 1;
+
+        this.setActive(newPos);
+    }
+
+    ResponsiveGallery.prototype.movePrev = function () {
+        var activeItem = this.getActive();
+
+        // Get new position
+        var newPos = activeItem.dataset.pos;
+        newPos--;
+        if (newPos < 1)
+            newPos = this.itemCount;
+
+        this.setActive(newPos);
+    }
+
+    ResponsiveGallery.prototype.setActive = function (pos) {
+        log('set Active to ' + pos);
+
+        // Get active item and remove active class
+        var activeItem = this.getActive();
+        activeItem.classList.remove('active');
+
+        // Get new pos item and set as current
+        activeItem = this.rg.querySelector('[data-pos="' + pos + '"]');
+        activeItem.classList.add('active');
+
+        anime({
+            targets: '.responsiveGallery .rg-container',
+            left: '-' + activeItem.offsetLeft + 'px'
+        });
+    }
+
+    ResponsiveGallery.prototype.getCurrentPosition = function () {
+        log(this.rg.style.left);
+    }
+
+    var rg;
+    window.addEventListener('load', function () {
+        rg = new ResponsiveGallery();
+    });
 </script>
 
 </html>
