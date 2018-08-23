@@ -129,6 +129,23 @@
         return this.rg.querySelector('.rg-item.active');
     }
 
+    ResponsiveGallery.prototype.setActive = function (pos) {
+        log('set Active to ' + pos);
+
+        // Get active item and remove active class
+        var activeItem = this.getActive();
+        activeItem.classList.remove('active');
+
+        // Get new pos item and set as current
+        activeItem = this.rg.querySelector('[data-pos="' + pos + '"]');
+        activeItem.classList.add('active');
+
+        anime({
+            targets: '.responsiveGallery .rg-container',
+            left: '-' + activeItem.offsetLeft + 'px'
+        });
+    }
+
     ResponsiveGallery.prototype.moveNext = function () {
         var activeItem = this.getActive();
 
@@ -151,23 +168,6 @@
             newPos = this.itemCount;
 
         this.setActive(newPos);
-    }
-
-    ResponsiveGallery.prototype.setActive = function (pos) {
-        log('set Active to ' + pos);
-
-        // Get active item and remove active class
-        var activeItem = this.getActive();
-        activeItem.classList.remove('active');
-
-        // Get new pos item and set as current
-        activeItem = this.rg.querySelector('[data-pos="' + pos + '"]');
-        activeItem.classList.add('active');
-
-        anime({
-            targets: '.responsiveGallery .rg-container',
-            left: '-' + activeItem.offsetLeft + 'px'
-        });
     }
 
     ResponsiveGallery.prototype.getCurrentPosition = function () {
