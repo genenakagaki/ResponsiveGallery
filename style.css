@@ -1,0 +1,41 @@
+.responsiveGallery .rg-view {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.responsiveGallery .rg-container {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    display: block;
+}
+
+.responsiveGallery .rg-container .rg-item {
+    height: 100%;
+    float: left;
+    padding: 0 1px;
+}
+
+.responsiveGallery .rg-container .rg-item img {
+    height: 100%;
+}
+
+.responsiveGallery .controls button {
+    position: absolute;
+    z-index: 10;
+    height: 100%;
+    background: none;
+    border: 1px solid black;
+}
+
+.responsiveGallery .controls .next {
+    left: 0;
+}
+
+.responsiveGallery .controls .prev {
+    right: 0;
+}
